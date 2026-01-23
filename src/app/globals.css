@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* 这里定义你的主题变量（即调色盘） */
+@theme {
+  /* 基础背景色：极客黑 */
+  --color-app-bg: #050505;
+  --color-text-main: #ffffff;
+
+  /* 卡片背景与边框：深灰质感 */
+  --color-card-bg: #0f0f11;
+  --color-card-border: #1f1f22;
+
+  /* 品牌色：科技金 (给名字和重要标签) */
+  --color-primary-gold: #e2b808;
+
+  /* 生活色：温柔粉 (给伴侣和猫) */
+  --color-life-pink: #f472b6;
+
+  /* 科技色：蓝色 (给技术栈) */
+  --color-tech-blue: #3b82f6;
+
+  /* 文本色阶 */
+  --color-text-main: #ffffff;
+  --color-text-dim: #a1a1aa;
+
+  /* 统一圆角变量 */
+  --radius-card: 2rem;
+
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* 2. 定义浅色模式变量覆盖 */
+.light {
+  --color-app-bg: #faf7f2;
+  --color-card-bg: #ffffff;
+  --color-card-border: #eaddd0;
+  --color-text-main: #292524;
+  --color-text-dim: #78716c;
+  --color-primary-gold: #d97706;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+
+/* 定义组件类（替代原来的 @layer components） */
+@utility card-standard {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-card);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--color-card-border), white 20%);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility title-main {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-main);
+  letter-spacing: var(--tracking-tight);
+}
+
+@utility badge-base {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  border: 1px solid;
+}
+
+/* 核心：确保基础标签应用了变量 */
+@layer base {
+
+  html,
+  body {
+    /* 消除 Next.js 可能存在的默认边距 */
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--color-app-bg);
+    color: var(--color-text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* 增加切换时的丝滑感 */
+  }
 }
