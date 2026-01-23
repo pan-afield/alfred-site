@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
 /* 这里定义你的主题变量（即调色盘） */
+/* @theme 是 Tailwind CSS v4 的合法规则 */
 @theme {
-  /* 基础背景色：极客黑 */
-  --color-app-bg: #050505;
+  /* 基础背景色：更深的幕布黑，拉开与卡片的对比 */
+  --color-app-bg: #02010a;
   --color-text-main: #ffffff;
 
-  /* 卡片背景与边框：深灰质感 */
-  --color-card-bg: #0f0f11;
-  --color-card-border: #1f1f22;
+  /* 卡片背景与边框：略亮一点的深灰，凸显卡片层级 */
+  --color-card-bg: #111827;
+  --color-card-border: #1f2933;
 
   /* 品牌色：科技金 (给名字和重要标签) */
   --color-primary-gold: #e2b808;
@@ -70,6 +71,16 @@
   font-size: var(--text-xs);
   font-weight: var(--font-medium);
   border: 1px solid;
+}
+
+@layer utilities {
+  .mask-fade-edges {
+    mask-image: linear-gradient(to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent);
+  }
 }
 
 /* 核心：确保基础标签应用了变量 */
