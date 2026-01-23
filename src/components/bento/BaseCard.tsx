@@ -2,7 +2,6 @@
 
 import React, { useRef } from 'react';
 import { Variants, motion } from 'framer-motion';
-import gsap from 'gsap';
 
 interface BaseCardProps {
   children: React.ReactNode;
@@ -30,46 +29,46 @@ export const BaseCard = ({ children, className = "" }: BaseCardProps) => {
   const lightRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current || !lightRef.current) return;
+    // if (!cardRef.current || !lightRef.current) return;
 
-    const { left, top, width, height } = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - left;
-    const y = e.clientY - top;
+    // const { left, top, width, height } = cardRef.current.getBoundingClientRect();
+    // const x = e.clientX - left;
+    // const y = e.clientY - top;
 
     // 计算倾斜角度 (范围在 -5deg 到 5deg 之间)
-    const xRotation = ((y - height / 2) / height) * -10;
-    const yRotation = ((x - width / 2) / width) * 10;
+    // const xRotation = ((y - height / 2) / height) * -10;
+    // const yRotation = ((x - width / 2) / width) * 10;
 
-    // 使用 GSAP 进行丝滑的旋转
-    gsap.to(cardRef.current, {
-      rotateX: xRotation,
-      rotateY: yRotation,
-      duration: 0.5,
-      ease: "power2.out",
-      perspective: 1000
-    });
+    // // 使用 GSAP 进行丝滑的旋转
+    // gsap.to(cardRef.current, {
+    //   rotateX: xRotation,
+    //   rotateY: yRotation,
+    //   duration: 0.5,
+    //   ease: "power2.out",
+    //   perspective: 1000
+    // });
 
-    // 移动手电筒光晕
-    gsap.to(lightRef.current, {
-      x: x - 150, // 150 是光晕半径
-      y: y - 150,
-      opacity: 1,
-      duration: 0.2
-    });
+    // // 移动手电筒光晕
+    // gsap.to(lightRef.current, {
+    //   x: x - 150, // 150 是光晕半径
+    //   y: y - 150,
+    //   opacity: 0.5,
+    //   duration: 0.2
+    // });
   };
 
   const handleMouseLeave = () => {
     // 恢复原状
-    gsap.to(cardRef.current, {
-      rotateX: 0,
-      rotateY: 0,
-      duration: 0.8,
-      ease: "elastic.out(1, 0.3)"
-    });
-    gsap.to(lightRef.current, {
-      opacity: 0,
-      duration: 0.5
-    });
+    // gsap.to(cardRef.current, {
+    //   rotateX: 0,
+    //   rotateY: 0,
+    //   duration: 0.8,
+    //   ease: "elastic.out(1, 0.3)"
+    // });
+    // gsap.to(lightRef.current, {
+    //   opacity: 0,
+    //   duration: 0.5
+    // });
   };
 
   return (

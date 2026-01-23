@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AmbientGlow } from "@/components/AmbientGlow";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* 背景层 */}
+        <AmbientGlow />
+
+        {/* 内容层 */}
+        <div className="relative z-10">
+          {children}
+        </div>
       </body>
     </html>
   );

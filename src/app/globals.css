@@ -8,8 +8,9 @@
   --color-text-main: #ffffff;
 
   /* 卡片背景与边框：略亮一点的深灰，凸显卡片层级 */
-  --color-card-bg: #111827;
-  --color-card-border: #1f2933;
+  /* 暖色调深色背景，带一点透明度 */
+  --color-card-bg: rgba(24, 22, 20, 0.8);
+  --color-card-border: rgba(251, 191, 36, 0.1);
 
   /* 品牌色：科技金 (给名字和重要标签) */
   --color-primary-gold: #e2b808;
