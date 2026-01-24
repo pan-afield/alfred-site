@@ -1,6 +1,6 @@
 "use client";
 
-import ThemeToggle from '@/components/ThemeToggle';
+import dynamic from 'next/dynamic';
 import { TechCard } from '@/components/bento/TechCard';
 import { LifeCard } from '@/components/bento/LifeCard';
 import { CookingCard } from '@/components/bento/CookingCard';
@@ -21,6 +21,11 @@ const containerVariants: Variants = {
     }
   }
 };
+
+// 使用 dynamic import 并禁用 ssr
+const ThemeToggle = dynamic(() => import('@/components/ThemeToggle').then(mod => mod.default), {
+  ssr: false
+})
 
 export default function HomePage() {
   return (

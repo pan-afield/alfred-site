@@ -2,6 +2,8 @@
 
 import React, { useRef } from 'react';
 import { Variants, motion } from 'framer-motion';
+import gsap from 'gsap';
+import { useSettingStore } from '@/store/settingStore';
 
 interface BaseCardProps {
   children: React.ReactNode;
@@ -27,48 +29,54 @@ export const itemVariants: Variants = {
 export const BaseCard = ({ children, className = "" }: BaseCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const lightRef = useRef<HTMLDivElement>(null);
-
+  const theme = useSettingStore((state) => state.theme);
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    // if (!cardRef.current || !lightRef.current) return;
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    // const { left, top, width, height } = cardRef.current.getBoundingClientRect();
-    // const x = e.clientX - left;
-    // const y = e.clientY - top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
 
-    // 计算倾斜角度 (范围在 -5deg 到 5deg 之间)
-    // const xRotation = ((y - height / 2) / height) * -10;
-    // const yRotation = ((x - width / 2) / width) * 10;
+    const rotateX = (y - centerY) / 20; // 调整除数来控制倾斜幅度
+    const rotateY = (centerX - x) / 20;
 
-    // // 使用 GSAP 进行丝滑的旋转
-    // gsap.to(cardRef.current, {
-    //   rotateX: xRotation,
-    //   rotateY: yRotation,
-    //   duration: 0.5,
-    //   ease: "power2.out",
-    //   perspective: 1000
-    // });
+    // 计算偏移，让阴影向鼠标相反的方向延伸
+    const moveX = (x - rect.width / 2) / 10;
+    const moveY = (y - rect.height / 2) / 10;
 
-    // // 移动手电筒光晕
-    // gsap.to(lightRef.current, {
-    //   x: x - 150, // 150 是光晕半径
-    //   y: y - 150,
-    //   opacity: 0.5,
-    //   duration: 0.2
-    // });
+    // 核心优化：判断主题选择颜色
+    const shadowColor = theme === 'dark'
+      ? 'rgba(251, 191, 36, 0.25)' // 暗色模式：琥珀金光晕
+      : 'rgba(0, 0, 0, 0.15)';     // 浅色模式：经典柔和阴影
+
+    gsap.to(card, {
+      // 暗色下增加模糊半径 (60px) 并稍微缩小扩散范围 (-10px)
+      boxShadow: theme === 'dark'
+        ? `${-moveX}px ${-moveY}px 60px -10px ${shadowColor}`
+        : `${-moveX}px ${-moveY}px 30px -5px ${shadowColor}`,
+      y: -4, // 悬停时微浮
+      duration: 0.4,
+    });
+
+    gsap.to(card, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      transformPerspective: 1000,
+      duration: 0.5,
+      ease: "power2.out"
+    });
   };
 
-  const handleMouseLeave = () => {
-    // 恢复原状
-    // gsap.to(cardRef.current, {
-    //   rotateX: 0,
-    //   rotateY: 0,
-    //   duration: 0.8,
-    //   ease: "elastic.out(1, 0.3)"
-    // });
-    // gsap.to(lightRef.current, {
-    //   opacity: 0,
-    //   duration: 0.5
-    // });
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    gsap.to(e.currentTarget, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.5,
+      ease: "power2.out"
+    });
+
   };
 
   return (

@@ -1,11 +1,44 @@
 @import "tailwindcss";
 
-/* 这里定义你的主题变量（即调色盘） */
-/* @theme 是 Tailwind CSS v4 的合法规则 */
+
+:root {
+  /* 定义过渡时间，确保颜色切换时有 0.5s 的渐变 */
+  --theme-transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, opacity 0.5s ease;
+  /* 深色模式：带有品牌色的氛围阴影（类似发光） */
+  --card-shadow-hover: 0 20px 40px -20px rgba(251, 191, 36, 0.3);
+}
+
+
+/* 将过渡应用到全局和卡片 */
+body,
+.card-standard,
+.badge-base {
+  transition: var(--theme-transition);
+}
+
+/* 针对 Ambient Glow 的混合模式也可以做过渡 */
+.ambient-glow {
+  transition: opacity 0.8s ease, filter 0.8s ease;
+}
+
+/* 
+ * 主题变量定义
+ * 
+ * 说明：在 Tailwind CSS v4 中，@theme 用于定义全局主题变量，
+ * 这些变量会被 Tailwind 识别并可以在工具类中使用。
+ * 
+ * 但是，@theme 不能包含选择器（如 .light），所以浅色模式的覆盖
+ * 需要在 @theme 外部通过 .light 类选择器来定义。
+ * 
+ * 这是 Tailwind CSS v4 的推荐做法：
+ * 1. @theme 中定义默认主题（通常是深色模式）
+ * 2. 使用类选择器（.light）来覆盖为浅色模式
+ */
+
+/* 1. 默认主题（深色模式）- 在 @theme 中定义，供 Tailwind 识别 */
 @theme {
   /* 基础背景色：更深的幕布黑，拉开与卡片的对比 */
   --color-app-bg: #02010a;
-  --color-text-main: #ffffff;
 
   /* 卡片背景与边框：略亮一点的深灰，凸显卡片层级 */
   /* 暖色调深色背景，带一点透明度 */
@@ -27,10 +60,9 @@
 
   /* 统一圆角变量 */
   --radius-card: 2rem;
-
 }
 
-/* 2. 定义浅色模式变量覆盖 */
+/* 2. 浅色模式变量覆盖 - 必须在 @theme 外部定义 */
 .light {
   --color-app-bg: #faf7f2;
   --color-card-bg: #ffffff;
@@ -38,6 +70,9 @@
   --color-text-main: #292524;
   --color-text-dim: #78716c;
   --color-primary-gold: #d97706;
+
+  /* 浅色模式：细腻的灰色长阴影 */
+  --card-shadow-hover: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -51,11 +86,14 @@
   transition: all 0.3s ease;
   overflow: hidden;
   position: relative;
+  transition: transform 0.4s ease, shadow 0.4s ease, border-color 0.4s ease;
 
   &:hover {
     border-color: color-mix(in srgb, var(--color-card-border), white 20%);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    transform: translateY(-2px);
+    /* box-shadow: var(--card-shadow-hover); */
+    border-color: var(--color-primary-gold);
+    /* 悬停时边框微亮 */
+    /* transform: translateY(-2px); */
   }
 }
 
@@ -64,6 +102,12 @@
   font-weight: var(--font-bold);
   color: var(--color-text-main);
   letter-spacing: var(--tracking-tight);
+  transition: color 0.5s ease-out;
+}
+
+@utility text-dim {
+  transition: color 0.6s ease-out 0.1s;
+  /* 稍微延迟 0.1s */
 }
 
 @utility badge-base {
@@ -92,6 +136,10 @@
     /* 消除 Next.js 可能存在的默认边距 */
     margin: 0;
     padding: 0;
+    max-width: 100vw;
+    overflow-x: hidden;
+    /* 禁止横向滚动 */
+    position: relative;
   }
 
   body {
@@ -100,4 +148,5 @@
     transition: background-color 0.3s ease, color 0.3s ease;
     /* 增加切换时的丝滑感 */
   }
+
 }
