@@ -1,9 +1,11 @@
-// src/app/(sub-pages)/layout.tsx
+// src/app/(pages)/layout.tsx
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function SubPagesLayout({ children }: { children: React.ReactNode }) {
+    const pathname = usePathname(); // 获取当前路径
     return (
         <div className="relative min-h-screen bg-background overflow-hidden">
             {/* 共享导航 */}
@@ -18,6 +20,7 @@ export default function SubPagesLayout({ children }: { children: React.ReactNode
             {/* 统一的页面入场动效容器 */}
             <AnimatePresence mode="wait">
                 <motion.main
+                    key={pathname}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
