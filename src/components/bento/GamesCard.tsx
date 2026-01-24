@@ -1,8 +1,17 @@
 'use client';
 import { BaseCard } from './BaseCard';
 
-export const GamesCard = () => (
-  <BaseCard className="md:col-span-2 md:row-span-1">
+interface GamesCardProps {
+  path?: string;
+  ariaLabel?: string;
+}
+
+export const GamesCard = ({ path, ariaLabel }: GamesCardProps) => (
+  <BaseCard
+    className="md:col-span-2 md:row-span-1"
+    path={path}
+    ariaLabel={ariaLabel}
+  >
     <div className="flex flex-col justify-between h-full">
       <span className="text-3xl">🎮</span>
       <div>

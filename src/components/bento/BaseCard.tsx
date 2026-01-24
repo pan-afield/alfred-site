@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { Variants, motion } from 'framer-motion';
 import gsap from 'gsap';
 import { useSettingStore } from '@/store/settingStore';
@@ -8,6 +9,8 @@ import { useSettingStore } from '@/store/settingStore';
 interface BaseCardProps {
   children: React.ReactNode;
   className?: string;
+  path?: string;
+  ariaLabel?: string;
 }
 
 // 定义单个卡片的动画效果
@@ -26,10 +29,25 @@ export const itemVariants: Variants = {
   }
 };
 
-export const BaseCard = ({ children, className = "" }: BaseCardProps) => {
+export const BaseCard = ({ children, className = "", path, ariaLabel }: BaseCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const lightRef = useRef<HTMLDivElement>(null);
   const theme = useSettingStore((state) => state.theme);
+  const router = useRouter();
+  const isClickable = typeof path === "string" && path.length > 0;
+
+  const handleNavigate = () => {
+    if (!isClickable) return;
+    router.push(path as string);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!isClickable) return;
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleNavigate();
+    }
+  };
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -83,9 +101,14 @@ export const BaseCard = ({ children, className = "" }: BaseCardProps) => {
     <motion.div
       ref={cardRef}
       variants={itemVariants}
+      onClick={handleNavigate}
+      onKeyDown={handleKeyDown}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`card-standard group relative will-change-transform ${className}`}
+      role={isClickable ? "button" : undefined}
+      tabIndex={isClickable ? 0 : undefined}
+      aria-label={ariaLabel}
+      className={`card-standard group relative will-change-transform ${isClickable ? "cursor-pointer" : ""} ${className}`}
       style={{ transformStyle: 'preserve-3d' }}
     >
       {/* 动态光晕层 */}

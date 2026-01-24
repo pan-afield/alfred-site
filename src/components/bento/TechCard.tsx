@@ -11,9 +11,18 @@ const STACKS = [
   { name: 'pnpm', color: 'text-yellow-500' },
 ];
 
-export const TechCard = () => {
+interface TechCardProps {
+  path?: string;
+  ariaLabel?: string;
+}
+
+export const TechCard = ({ path, ariaLabel }: TechCardProps) => {
   return (
-    <BaseCard className="md:col-span-2 md:row-span-2 flex flex-col justify-between h-full">
+    <BaseCard
+      className="md:col-span-2 md:row-span-2 flex flex-col justify-between h-full"
+      path={path}
+      ariaLabel={ariaLabel}
+    >
       {/* 顶部：标题与图标 */}
       <div>
         <div className="flex justify-between items-start">

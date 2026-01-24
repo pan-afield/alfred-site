@@ -11,7 +11,12 @@ const MOVIES = [
   { title: 'Tenet', year: '2020', accent: 'border-zinc-500/30' },
 ];
 
-export const CinemaCard = () => {
+interface CinemaCardProps {
+  path?: string;
+  ariaLabel?: string;
+}
+
+export const CinemaCard = ({ path, ariaLabel }: CinemaCardProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const tweenRef = useRef<gsap.core.Tween | null>(null);
 
@@ -33,7 +38,11 @@ export const CinemaCard = () => {
   }, []);
 
   return (
-    <BaseCard className="md:col-span-2 md:row-span-1 overflow-hidden p-0">
+    <BaseCard
+      className="md:col-span-2 md:row-span-1 overflow-hidden p-0"
+      path={path}
+      ariaLabel={ariaLabel}
+    >
       {/* 1. 稍微减小外层容器的内边距，从 p-6 改为 p-5 */}
       <div className="relative h-full w-full p-5 flex flex-col justify-between">
 
@@ -49,19 +58,19 @@ export const CinemaCard = () => {
               <div
                 key={index}
                 /* 3. 核心修改：w-28 h-36，让比例更像竖版电影海报，且总高度可控 */
-                className={`relative w-28 h-36 flex-shrink-0 rounded-xl border ${movie.accent} 
+                className={`relative w-28 h-36 shrink-0 rounded-xl border ${movie.accent} 
                            bg-text-main/5 backdrop-blur-sm p-3 flex flex-col justify-between
                            transition-all duration-300 hover:bg-text-main/10 hover:-translate-y-1`}
               >
                 {/* 装饰性背景文字：缩小字号 */}
-                <span className="absolute top-1 right-2 text-3xl font-black text-text-main/[0.03] select-none">
+                <span className="absolute top-1 right-2 text-3xl font-black text-text-main/3 select-none">
                   {movie.year.slice(-2)}
                 </span>
 
                 <div className="relative z-10">
                   {/* 装饰条变细 */}
                   <div className="w-4 h-0.5 bg-primary-gold mb-2" />
-                  <h3 className="text-[11px] font-bold text-text-main leading-tight tracking-tight uppercase break-words">
+                  <h3 className="text-[11px] font-bold text-text-main leading-tight tracking-tight uppercase wrap-break-word">
                     {movie.title}
                   </h3>
                 </div>

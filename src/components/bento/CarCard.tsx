@@ -3,7 +3,12 @@ import { useRef } from 'react';
 import { BaseCard } from './BaseCard';
 import gsap from 'gsap';
 
-export const CarCard = () => {
+interface CarCardProps {
+  path?: string;
+  ariaLabel?: string;
+}
+
+export const CarCard = ({ path, ariaLabel }: CarCardProps) => {
   const carIconRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLSpanElement>(null);
 
@@ -36,7 +41,11 @@ export const CarCard = () => {
 
   return (
     <div onMouseEnter={handleMouseEnter} className="md:col-span-2 md:row-span-1 h-full">
-      <BaseCard className="flex items-center justify-between overflow-hidden h-full">
+      <BaseCard
+        className="flex items-center justify-between overflow-hidden h-full"
+        path={path}
+        ariaLabel={ariaLabel}
+      >
         {/* 左侧文字区 */}
         <div className="flex flex-col relative z-10">
           <div className="flex items-center gap-2 mb-2">
@@ -54,7 +63,7 @@ export const CarCard = () => {
         {/* 右侧交互图标区 */}
         <div className="relative flex items-center justify-center pr-4">
           {/* 背景装饰轨迹线 */}
-          <div className="absolute right-0 w-32 h-px bg-gradient-to-l from-primary-gold/50 to-transparent opacity-20" />
+          <div className="absolute right-0 w-32 h-px bg-linear-to-l from-primary-gold/50 to-transparent opacity-20" />
 
           <div
             ref={carIconRef}
@@ -65,7 +74,7 @@ export const CarCard = () => {
         </div>
 
         {/* 装饰性底层背景 */}
-        <div className="absolute -bottom-6 -right-6 text-8xl font-black italic text-text-main/[0.03] pointer-events-none select-none">
+        <div className="absolute -bottom-6 -right-6 text-8xl font-black italic text-text-main/3 pointer-events-none select-none">
           PORSCHE
         </div>
       </BaseCard>

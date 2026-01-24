@@ -4,12 +4,21 @@ import { BaseCard } from './BaseCard';
 import catImg from '@/images/life/cat.jpg';
 import avatarImage from '@/images/life/avatar-she.jpg';
 
-export const LifeCard = () => {
+interface LifeCardProps {
+  path?: string;
+  ariaLabel?: string;
+}
+
+export const LifeCard = ({ path, ariaLabel }: LifeCardProps) => {
   return (
     // BaseCard 带有 group + overflow-hidden，方便内部做 hover 动画且保证圆角裁剪
-    <BaseCard className="md:col-span-2 md:row-span-2 p-0 border-none group overflow-hidden relative">
+    <BaseCard
+      className="md:col-span-2 md:row-span-2 p-0 border-none group overflow-hidden relative"
+      path={path}
+      ariaLabel={ariaLabel}
+    >
       {/* 圆角裁剪层：使用 isolation 创建新的层叠上下文，确保圆角不受父元素 3D 变换影响 */}
-      <div 
+      <div
         className="absolute inset-0 overflow-hidden isolate"
         style={{
           borderRadius: 'var(--radius-card)',
@@ -24,13 +33,13 @@ export const LifeCard = () => {
           priority
           placeholder="blur"
           className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 opacity-40 dark:opacity-60"
-          style={{ 
+          style={{
             willChange: 'transform',
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-app-bg via-app-bg/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-app-bg via-app-bg/60 to-transparent" />
       </div>
 
       {/* 内容层 */}

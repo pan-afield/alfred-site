@@ -1,8 +1,17 @@
 'use client';
 import { BaseCard } from './BaseCard';
 
-export const CookingCard = () => (
-  <BaseCard className="md:col-span-2 md:row-span-1">
+interface CookingCardProps {
+  path?: string;
+  ariaLabel?: string;
+}
+
+export const CookingCard = ({ path, ariaLabel }: CookingCardProps) => (
+  <BaseCard
+    className="md:col-span-2 md:row-span-1"
+    path={path}
+    ariaLabel={ariaLabel}
+  >
     <div className="flex justify-between items-center h-full">
       <div>
         <span className="badge-base bg-orange-500/10 text-orange-500 border-orange-500/20">Chef Mode</span>
