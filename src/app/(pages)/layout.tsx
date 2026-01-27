@@ -18,13 +18,13 @@ export default function SubPagesLayout({ children }: { children: React.ReactNode
             </nav>
 
             {/* 统一的页面入场动效容器 */}
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
                 <motion.main
                     key={pathname}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     className="container mx-auto pt-32 px-6 pb-20"
                 >
                     {children}

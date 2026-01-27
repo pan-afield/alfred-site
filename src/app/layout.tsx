@@ -42,7 +42,7 @@ export default function RootLayout({
     (function() {
       try {
         const stored = localStorage.getItem('user-theme-preference');
-        let theme = 'light';
+        let theme = 'dark';
         if (stored) {
           theme = JSON.parse(stored).state.theme;
         } else {
