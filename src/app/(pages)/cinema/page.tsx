@@ -1,12 +1,16 @@
-import { PageWrapper } from "@/components/shared/PageWrapper";
+// src/app/(pages)/cinema/page.tsx
+import { getMovies } from "@/lib/sanity";
+import CinemaClient from "./CinemaClient";
 
-export default function CinemaPage() {
+export default async function CinemaPage() {
+    // 假设这是从 Sanity 获取的数据
+    const movies = await getMovies();
+
+    console.log(movies);
+
     return (
-        <PageWrapper>
-            <div className="p-20 text-center">
-                <h1 className="text-4xl font-bold">🎬 影评详情页施工中...</h1>
-                <p className="mt-4 opacity-50">别急，Alfred，我们正在一步步开凿。</p>
-            </div>
-        </PageWrapper>
+        <div className="max-w-6xl mx-auto">
+            <CinemaClient initialMovies={movies} />
+        </div>
     );
 }

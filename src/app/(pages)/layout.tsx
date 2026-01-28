@@ -1,6 +1,5 @@
 // src/app/(pages)/layout.tsx
 "use client";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -18,7 +17,7 @@ export default function SubPagesLayout({ children }: { children: React.ReactNode
             </nav>
 
             {/* 统一的页面入场动效容器 */}
-            <AnimatePresence mode="popLayout">
+            {/* <AnimatePresence mode="popLayout">
                 <motion.main
                     key={pathname}
                     initial={{ opacity: 0, y: 20 }}
@@ -26,10 +25,10 @@ export default function SubPagesLayout({ children }: { children: React.ReactNode
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     className="container mx-auto pt-32 px-6 pb-20"
-                >
-                    {children}
-                </motion.main>
-            </AnimatePresence>
+                > */}
+            {children}
+            {/* </motion.main> */}
+            {/* </AnimatePresence> */}
 
             {/* 延续首页的环境光（可以调低亮度，作为背景点缀） */}
             <div className="fixed inset-0 z-[-1] opacity-30 blur-[120px] bg-gradient-to-br from-amber-500/10 to-transparent pointer-events-none" />
