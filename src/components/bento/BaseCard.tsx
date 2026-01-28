@@ -36,7 +36,6 @@ export const BaseCard = ({ children, className = "", path, ariaLabel }: BaseCard
   const router = useRouter();
   const isClickable = typeof path === "string" && path.length > 0;
   const [isMobile, setIsMobile] = useState(false);
-  const touchStartTimeRef = useRef<number>(0);
   const isNavigatingRef = useRef<boolean>(false);
 
   // 检测移动设备
@@ -66,40 +65,6 @@ export const BaseCard = ({ children, className = "", path, ariaLabel }: BaseCard
       handleNavigate();
     }
   };
-
-  // 移动端触摸事件处理
-  const handleTouchStart = useCallback(() => {
-    if (!isClickable) return;
-    touchStartTimeRef.current = Date.now();
-    // 添加视觉反馈
-    if (cardRef.current) {
-      gsap.to(cardRef.current, {
-        scale: 0.98,
-        duration: 0.1,
-        ease: "power2.out"
-      });
-    }
-  }, [isClickable]);
-
-  const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
-    if (!isClickable) return;
-    const touchDuration = Date.now() - touchStartTimeRef.current;
-    
-    // 恢复缩放
-    if (cardRef.current) {
-      gsap.to(cardRef.current, {
-        scale: 1,
-        duration: 0.2,
-        ease: "power2.out"
-      });
-    }
-
-    // 如果触摸时间很短（< 300ms），认为是点击而不是滑动
-    if (touchDuration < 300) {
-      e.preventDefault();
-      handleNavigate();
-    }
-  }, [isClickable, handleNavigate]);
 
   // PC 端鼠标事件处理（仅在非移动端启用）
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -158,9 +123,8 @@ export const BaseCard = ({ children, className = "", path, ariaLabel }: BaseCard
     <motion.div
       ref={cardRef}
       variants={itemVariants}
-      onClick={!isMobile ? handleNavigate : undefined}
-      onTouchStart={isMobile ? handleTouchStart : undefined}
-      onTouchEnd={isMobile ? handleTouchEnd : undefined}
+      // 统一使用浏览器的点击判定逻辑（会自动区分滚动 vs 点击）
+      onClick={isClickable ? handleNavigate : undefined}
       onKeyDown={handleKeyDown}
       onMouseMove={!isMobile ? handleMouseMove : undefined}
       onMouseLeave={!isMobile ? handleMouseLeave : undefined}
