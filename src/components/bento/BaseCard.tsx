@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Variants, motion } from 'framer-motion';
 import gsap from 'gsap';
@@ -35,11 +35,29 @@ export const BaseCard = ({ children, className = "", path, ariaLabel }: BaseCard
   const theme = useSettingStore((state) => state.theme);
   const router = useRouter();
   const isClickable = typeof path === "string" && path.length > 0;
+  const [isMobile, setIsMobile] = useState(false);
+  const touchStartTimeRef = useRef<number>(0);
+  const isNavigatingRef = useRef<boolean>(false);
 
-  const handleNavigate = () => {
-    if (!isClickable) return;
+  // 检测移动设备
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        ) || window.innerWidth < 768
+      );
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handleNavigate = useCallback(() => {
+    if (!isClickable || isNavigatingRef.current) return;
+    isNavigatingRef.current = true;
     router.push(path as string);
-  };
+  }, [isClickable, path, router]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!isClickable) return;
@@ -48,7 +66,45 @@ export const BaseCard = ({ children, className = "", path, ariaLabel }: BaseCard
       handleNavigate();
     }
   };
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+
+  // 移动端触摸事件处理
+  const handleTouchStart = useCallback(() => {
+    if (!isClickable) return;
+    touchStartTimeRef.current = Date.now();
+    // 添加视觉反馈
+    if (cardRef.current) {
+      gsap.to(cardRef.current, {
+        scale: 0.98,
+        duration: 0.1,
+        ease: "power2.out"
+      });
+    }
+  }, [isClickable]);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isClickable) return;
+    const touchDuration = Date.now() - touchStartTimeRef.current;
+    
+    // 恢复缩放
+    if (cardRef.current) {
+      gsap.to(cardRef.current, {
+        scale: 1,
+        duration: 0.2,
+        ease: "power2.out"
+      });
+    }
+
+    // 如果触摸时间很短（< 300ms），认为是点击而不是滑动
+    if (touchDuration < 300) {
+      e.preventDefault();
+      handleNavigate();
+    }
+  }, [isClickable, handleNavigate]);
+
+  // PC 端鼠标事件处理（仅在非移动端启用）
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return; // 移动端禁用鼠标事件
+    
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -85,31 +141,37 @@ export const BaseCard = ({ children, className = "", path, ariaLabel }: BaseCard
       duration: 0.5,
       ease: "power2.out"
     });
-  };
+  }, [isMobile, theme]);
 
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseLeave = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return; // 移动端禁用鼠标事件
+    
     gsap.to(e.currentTarget, {
       rotateX: 0,
       rotateY: 0,
       duration: 0.5,
       ease: "power2.out"
     });
-
-  };
+  }, [isMobile]);
 
   return (
     <motion.div
       ref={cardRef}
       variants={itemVariants}
-      onClick={handleNavigate}
+      onClick={!isMobile ? handleNavigate : undefined}
+      onTouchStart={isMobile ? handleTouchStart : undefined}
+      onTouchEnd={isMobile ? handleTouchEnd : undefined}
       onKeyDown={handleKeyDown}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={!isMobile ? handleMouseMove : undefined}
+      onMouseLeave={!isMobile ? handleMouseLeave : undefined}
       role={isClickable ? "button" : undefined}
       tabIndex={isClickable ? 0 : undefined}
       aria-label={ariaLabel}
       className={`card-standard group relative will-change-transform ${isClickable ? "cursor-pointer" : ""} ${className}`}
-      style={{ transformStyle: 'preserve-3d' }}
+      style={{ 
+        transformStyle: 'preserve-3d',
+        touchAction: isClickable ? 'manipulation' : 'auto' // 优化移动端触摸响应
+      }}
     >
       {/* 动态光晕层 */}
       <div

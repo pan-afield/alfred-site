@@ -7,6 +7,8 @@
  * https://github.com/sanity-io/next-sanity
  */
 
+// 文件描述：Sanity Studio 后台管理页面
+
 import { NextStudio } from 'next-sanity/studio'
 import config from '../../../../sanity.config'
 
