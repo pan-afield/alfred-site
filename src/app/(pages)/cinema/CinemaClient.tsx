@@ -39,7 +39,7 @@ export default function CinemaClient({ initialMovies }: { initialMovies: MovieRe
                         key={movie._id}
                         onMouseEnter={() => setActiveMovie(movie)}
                         className="group cursor-pointer flex gap-6 items-start"
-                        whileHover={{ x: 10 }}
+                        whileHover={{ x: 0 }}
                     >
                         {/* 海报容器 */}
                         <div className="relative w-40 h-60 shrink-0 overflow-hidden rounded-xl bg-card-bg border border-card-border">
@@ -58,7 +58,27 @@ export default function CinemaClient({ initialMovies }: { initialMovies: MovieRe
                         {/* 内容区 */}
                         <div className="flex flex-col justify-center h-full">
                             <span className="text-xs font-mono opacity-40 mb-1">{movie.year} / {movie.director}</span>
-                            <h2 className="text-2xl font-bold group-hover:text-amber-500 transition-colors">{movie.title}</h2>
+                            {/* <h2 className="text-2xl font-bold group-hover:text-amber-500 transition-colors">{movie.title}</h2> */}
+                            <div className="flex items-center gap-4 mt-2">
+                                <h2 className="text-2xl font-bold tracking-tight group-hover:text-amber-500 transition-colors">
+                                    {movie.title}
+                                </h2>
+                                {/* 评分条 */}
+                                <div className="flex gap-0.5">
+                                    {[...Array(10)].map((_, i) => (
+                                        <div
+                                            key={i}
+                                            className={`w-1 h-4 rounded-full transition-all duration-500 ${i < movie.rating
+                                                ? 'bg-amber-500'
+                                                : 'bg-white/10'
+                                                }`}
+                                        />
+                                    ))}
+                                </div>
+                                <div className="text-sm text-dim opacity-40">
+                                    {movie.rating} Rating
+                                </div>
+                            </div>
                             <p className="text-dim text-sm mt-3 leading-relaxed max-w-sm">
                                 “ {movie.thought} ”
                             </p>

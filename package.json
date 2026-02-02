@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 8888",
+    "sanity": "sanity dev",
     "build": "next build",
     "start": "next start -p 8888",
     "lint": "next lint"
