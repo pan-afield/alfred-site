@@ -10,6 +10,17 @@ import { CinemaCard } from '@/components/bento/CinemaCard';
 import { CookingCard } from '@/components/bento/CookingCard';
 import { CarCard } from '@/components/bento/CarCard';
 
+interface Movie {
+    title: string;
+    year: string;
+    accentColor: string;
+    poster?: string;
+}
+
+interface MainPageProps {
+    initialMovies: Movie[];
+}
+
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -21,7 +32,7 @@ const containerVariants: Variants = {
     }
 };
 
-export default function MainPage() {
+export default function MainPage({ initialMovies }: MainPageProps) {
     return (
         <motion.section
             variants={containerVariants}
@@ -45,7 +56,7 @@ export default function MainPage() {
             <MusicCard path="/music" ariaLabel="打开 Music 页面" />
 
             {/* 6. 影音 (2x1) */}
-            <CinemaCard path="/cinema" ariaLabel="打开 Cinema 页面" />
+            <CinemaCard path="/cinema" ariaLabel="View my cinema reviews" initialData={initialMovies} />
 
             {/* 7. 烹饪 (2x1) - 横长块 */}
             <CookingCard path="/cooking" ariaLabel="打开 Cooking 页面" />

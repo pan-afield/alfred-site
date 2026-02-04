@@ -64,7 +64,7 @@ export default function CinemaClient({ initialMovies }: { initialMovies: MovieRe
                                     {movie.title}
                                 </h2>
                                 {/* 评分条 */}
-                                <div className="flex gap-0.5">
+                                {/* <div className="flex gap-0.5">
                                     {[...Array(10)].map((_, i) => (
                                         <div
                                             key={i}
@@ -74,12 +74,15 @@ export default function CinemaClient({ initialMovies }: { initialMovies: MovieRe
                                                 }`}
                                         />
                                     ))}
-                                </div>
-                                <div className="text-sm text-dim opacity-40">
+                                </div> */}
+                                <div className="text-sm text-dim opacity-40 shrink-0">
                                     {movie.rating} Rating
                                 </div>
                             </div>
-                            <p className="text-dim text-sm mt-3 leading-relaxed max-w-sm">
+                            <p
+                                className="text-dim text-sm mt-3 leading-relaxed max-w-sm line-clamp-5"
+                            // title={movie.thought}
+                            >
                                 “ {movie.thought} ”
                             </p>
                             <div className="flex gap-2 mt-4">

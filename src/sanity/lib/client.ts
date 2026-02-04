@@ -6,5 +6,7 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: process.env.NODE_ENV === 'production', // Set to false if statically generating pages, using ISR or tag-based revalidation
+  // 可以通过环境变量强制启用 CDN（有助于解决网络问题）
+  // 设置 NEXT_PUBLIC_SANITY_USE_CDN=true 来启用
+  useCdn: process.env.NEXT_PUBLIC_SANITY_USE_CDN === 'true' || process.env.NODE_ENV === 'production',
 })
