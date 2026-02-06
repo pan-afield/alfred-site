@@ -57,10 +57,10 @@ export default function CinemaClient({ initialMovies }: { initialMovies: MovieRe
 
                         {/* 内容区 */}
                         <div className="flex flex-col justify-center h-full">
-                            <span className="text-xs font-mono opacity-40 mb-1">{movie.year} / {movie.director}</span>
+                            <span className="text-xs font-mono opacity-40 mb-1 line-clamp-1">{movie.year} / {movie.director}</span>
                             {/* <h2 className="text-2xl font-bold group-hover:text-amber-500 transition-colors">{movie.title}</h2> */}
-                            <div className="flex items-center gap-4 mt-2">
-                                <h2 className="text-2xl font-bold tracking-tight group-hover:text-amber-500 transition-colors">
+                            <div className="flex items-center gap-4 mt-2 max-md:flex-col max-md:items-start max-md:gap-1">
+                                <h2 className="text-2xl max-md:text-xl font-bold tracking-tight group-hover:text-amber-500 transition-colors line-clamp-2">
                                     {movie.title}
                                 </h2>
                                 {/* 评分条 */}
@@ -80,12 +80,12 @@ export default function CinemaClient({ initialMovies }: { initialMovies: MovieRe
                                 </div>
                             </div>
                             <p
-                                className="text-dim text-sm mt-3 leading-relaxed max-w-sm line-clamp-5"
+                                className="text-dim text-sm mt-3 leading-relaxed max-w-sm line-clamp-4"
                             // title={movie.thought}
                             >
                                 “ {movie.thought} ”
                             </p>
-                            <div className="flex gap-2 mt-4">
+                            <div className="flex gap-2 mt-4 max-md:mt-2 max-md:flex-wrap">
                                 {movie.tags.map(tag => (
                                     <span key={tag} className="text-[10px] px-2 py-1 rounded-full border border-card-border opacity-60">
                                         {tag}
