@@ -1,7 +1,8 @@
 import { type SchemaTypeDefinition } from 'sanity'
 
 import { movieType } from './movie'
+import { projectType } from './project'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [movieType],
+  types: [movieType, projectType],
 }

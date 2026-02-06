@@ -54,3 +54,33 @@ export async function getMovies() {
     return []
   }
 }
+
+// 获取技术日志数据
+export async function getProjects() {
+  const query = `*[_type == "project"] | order(publishedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    summary,
+    tags,
+    category
+  }`;
+  return await client.fetch(query);
+}
+
+// 获取单个技术日志数据
+export async function getProjectBySlug(slug: string) {
+  const query = `*[_type == "project" && slug.current == $slug][0] {
+    title,
+    publishedAt,
+    readingTime,
+    summary,
+    content,
+    tags,
+    "coverImage": coverImage.asset->url
+  }`;
+
+  // 使用第二个参数传递变量，防止注入攻击
+  return await client.fetch(query, { slug });
+}
