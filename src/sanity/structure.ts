@@ -25,12 +25,23 @@ export const structure: StructureResolver = (S) =>
             .filter('_type == "project"')
         ),
 
+      // 3. 足迹 (新增) 🌍
+      S.documentTypeListItem('footprint')
+        .title('World Footprints')
+        .child(
+          S.documentList()
+            .title('Destinations')
+            .filter('_type == "footprint"')
+            // 可以按时间倒序排列，最近去的在最上面
+            .defaultOrdering([{ field: 'visitedAt', direction: 'desc' }])
+        ),
+
       S.divider(),
 
       // 3. 自动列出其他未手动定义的 Schema (防止漏掉新加的类型)
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&
-          !['movie', 'project'].includes(item.getId()!)
+          !['movie', 'project', 'footprint'].includes(item.getId()!)
       ),
     ])
