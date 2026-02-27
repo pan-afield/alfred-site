@@ -33,7 +33,8 @@ export const gameType = defineType({
             validation: (Rule) => Rule.min(1).max(5)
         }),
         defineField({ name: 'coverImage', title: '游戏封面', type: 'image', options: { hotspot: true } }),
-        defineField({ name: 'review', title: '简评', type: 'text', options: { rows: 3 } }),
+        // @ts-expect-error - rows is not a valid option for text type
+        defineField({ name: 'review', title: '简评', type: 'text', rows: 3 }),
     ],
     preview: {
         select: { title: 'title', subtitle: 'status', media: 'coverImage' }
