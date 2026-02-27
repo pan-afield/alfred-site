@@ -84,3 +84,26 @@ export async function getProjectBySlug(slug: string) {
   // 使用第二个参数传递变量，防止注入攻击
   return await client.fetch(query, { slug });
 }
+
+// 获取所有足迹
+export async function getFootprints() {
+  const query = `*[_type == "footprint"] {
+    _id,
+    title,
+    location,
+    "coverImage": coverImage.asset->url
+  }`;
+  return await client.fetch(query);
+}
+
+// 获取所有生活瞬间
+export async function getLifeMoments() {
+  const query = `*[_type == "life"] | order(publishedAt desc) {
+    _id,
+    content,
+    locationName,
+    publishedAt,
+    "images": images[].asset->url
+  }`;
+  return await client.fetch(query);
+}

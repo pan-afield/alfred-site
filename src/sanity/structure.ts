@@ -36,12 +36,15 @@ export const structure: StructureResolver = (S) =>
             .defaultOrdering([{ field: 'visitedAt', direction: 'desc' }])
         ),
 
+      // 4. 生活 (新增) 📸
+      S.documentTypeListItem('life').title('Daily Moments (Life)'),
+
       S.divider(),
 
       // 3. 自动列出其他未手动定义的 Schema (防止漏掉新加的类型)
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&
-          !['movie', 'project', 'footprint'].includes(item.getId()!)
+          !['movie', 'project', 'footprint', 'life'].includes(item.getId()!)
       ),
     ])
