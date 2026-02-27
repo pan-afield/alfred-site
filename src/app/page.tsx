@@ -1,12 +1,12 @@
 import MainPage from './(main)/page';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
-import { getMovies, getGames } from "@/lib/sanity";
+import { getMovies, getGames, getMusic } from "@/lib/sanity";
 import { urlFor } from '@/sanity/lib/image';
 
 export default async function HomePage() {
   // 在服务器组件中获取数据
-  const [movies, games] = await Promise.all([getMovies(), getGames()]);
+  const [movies, games, musicList] = await Promise.all([getMovies(), getGames(), getMusic()]);
   
   // 转换数据格式以匹配 CinemaCard 的接口
   const transformedMovies = movies.map((movie: { 
@@ -23,6 +23,8 @@ export default async function HomePage() {
 
   // 取第一条游戏数据作为 GamesCard 背景
   const initialGame = games?.[0] ? { coverImage: games[0].coverImage } : null;
+  // 取第一条音乐数据作为 MusicCard 背景
+  const initialMusic = musicList?.[0] ? { coverImage: musicList[0].coverImage } : null;
 
   return (
     <main className="min-h-screen bg-app-bg max-w-7xl mx-auto px-6 py-12 transition-colors duration-500">
@@ -31,7 +33,7 @@ export default async function HomePage() {
       <Header />
 
       {/* 2. Bento Grid 核心展示区 */}
-      <MainPage initialMovies={transformedMovies} initialGame={initialGame} />
+      <MainPage initialMovies={transformedMovies} initialGame={initialGame} initialMusic={initialMusic} />
 
       {/* 3. Footer */}
       <Footer />

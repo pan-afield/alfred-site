@@ -121,3 +121,17 @@ export async function getGames() {
     return [];
   }
 }
+
+// 获取所有音乐
+export async function getMusic() {
+  const query = `*[_type == "music"] | order(_createdAt desc) {
+    _id, title, artist, type, genre, spotifyUrl, comment,
+    "coverImage": coverImage.asset->url
+  }`;
+  try {
+    return await fetchWithRetry(() => client.fetch(query), 3, 1000);
+  } catch (error) {
+    console.error('获取音乐数据失败（已重试）:', error);
+    return [];
+  }
+}
