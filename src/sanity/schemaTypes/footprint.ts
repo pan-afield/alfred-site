@@ -54,7 +54,7 @@ export const footprintType = defineType({
         defineField({
             name: 'description',
             title: '短评',
-            type: 'string',
+            type: 'text',
             options: {
                 rows: 3,
             },
