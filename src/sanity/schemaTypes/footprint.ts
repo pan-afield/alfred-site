@@ -55,9 +55,9 @@ export const footprintType = defineType({
             name: 'description',
             title: '短评',
             type: 'text',
-            options: {
-                rows: 3,
-            },
+            // options: {
+            rows: 3,
+            // },
             description: '不用写长文，一两句当下的感受即可。',
         }),
     ],
