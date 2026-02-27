@@ -66,6 +66,15 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.18
+      '@types/geojson':
+        specifier: ^7946.0.16
+        version: 7946.0.16
+      '@types/mapbox__point-geometry':
+        specifier: ^1.0.87
+        version: 1.0.87
+      '@types/mapbox__vector-tile':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@types/node':
         specifier: ^20
         version: 20.19.30
@@ -2453,6 +2462,10 @@ packages:
   '@types/mapbox__point-geometry@1.0.87':
     resolution: {integrity: sha512-32whuSWD/aDBHpRrZmEMlRjxR0L3sSYUaRnVmw0XwyVMvuU5LsRqrFwYud7gXjqmUE0MSoJB91+IJMqCyYyxag==}
     deprecated: This is a stub types definition. @mapbox/point-geometry provides its own type definitions, so you do not need this installed.
+
+  '@types/mapbox__vector-tile@2.0.0':
+    resolution: {integrity: sha512-Cg8Ue+JIHTgi96eAjeOdT/Rj3ftU327v7bhi1buQ67xV5wdkaCOhzrLGq8E7vxZM/h2EqOKJTYETwwqm0lyvWw==}
+    deprecated: This is a stub types definition. @mapbox/vector-tile provides its own type definitions, so you do not need this installed.
 
   '@types/node@20.19.30':
     resolution: {integrity: sha512-WJtwWJu7UdlvzEAUm484QNg5eAoq5QR08KDNx7g45Usrs2NtOPiX8ugDqmKdXkyL03rBqU5dYNYVQetEpBHq2g==}
@@ -9278,6 +9291,10 @@ snapshots:
   '@types/mapbox__point-geometry@1.0.87':
     dependencies:
       '@mapbox/point-geometry': 1.1.0
+
+  '@types/mapbox__vector-tile@2.0.0':
+    dependencies:
+      '@mapbox/vector-tile': 2.0.4
 
   '@types/node@20.19.30':
     dependencies:

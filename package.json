@@ -31,6 +31,9 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/geojson": "^7946.0.16",
+    "@types/mapbox__point-geometry": "^1.0.87",
+    "@types/mapbox__vector-tile": "^2.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
