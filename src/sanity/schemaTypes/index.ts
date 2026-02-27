@@ -4,7 +4,7 @@ import { movieType } from './movie'
 import { projectType } from './project'
 import { footprintType } from './footprint'
 import { lifeType } from './life'
-
+import { gameType } from './games'
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [movieType, projectType, footprintType, lifeType],
+  types: [movieType, projectType, footprintType, lifeType, gameType],
 }

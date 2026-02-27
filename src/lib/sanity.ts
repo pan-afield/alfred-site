@@ -107,3 +107,17 @@ export async function getLifeMoments() {
   }`;
   return await client.fetch(query);
 }
+
+// 获取所有游戏
+export async function getGames() {
+  const query = `*[_type == "game"] | order(status asc, rating desc) {
+    _id, title, platform, status, rating, review,
+    "coverImage": coverImage.asset->url
+  }`;
+  try {
+    return await fetchWithRetry(() => client.fetch(query), 3, 1000);
+  } catch (error) {
+    console.error('获取游戏数据失败（已重试）:', error);
+    return [];
+  }
+}

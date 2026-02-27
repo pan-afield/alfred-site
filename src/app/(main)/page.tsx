@@ -17,8 +17,13 @@ interface Movie {
     poster?: string;
 }
 
+interface Game {
+    coverImage?: string;
+}
+
 interface MainPageProps {
     initialMovies: Movie[];
+    initialGame?: Game | null;
 }
 
 const containerVariants: Variants = {
@@ -32,7 +37,7 @@ const containerVariants: Variants = {
     }
 };
 
-export default function MainPage({ initialMovies }: MainPageProps) {
+export default function MainPage({ initialMovies, initialGame }: MainPageProps) {
     return (
         <motion.section
             variants={containerVariants}
@@ -50,7 +55,7 @@ export default function MainPage({ initialMovies }: MainPageProps) {
             <TravelCard path="/travel" ariaLabel="打开 Travel 页面" />
 
             {/* 4. 游戏 (2x1) */}
-            <GamesCard path="/games" ariaLabel="打开 Games 页面" />
+            <GamesCard path="/games" ariaLabel="打开 Games 页面" coverImage={initialGame?.coverImage} />
 
             {/* 5. 音乐 (1x2) */}
             <MusicCard path="/music" ariaLabel="打开 Music 页面" />
