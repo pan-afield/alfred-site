@@ -55,7 +55,6 @@ export const footprintType = defineType({
             name: 'description',
             title: '短评',
             type: 'text',
-            // @ts-expect-error - rows is not a valid option for text type
             rows: 3,
             description: '不用写长文，一两句当下的感受即可。',
         }),
