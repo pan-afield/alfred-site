@@ -10,7 +10,7 @@ export const lifeType = defineType({
             name: 'content',
             title: '文字内容',
             type: 'text',
-            options: { rows: 3 },
+            rows: 3,
             description: '写下当下的想法...',
         }),
         {

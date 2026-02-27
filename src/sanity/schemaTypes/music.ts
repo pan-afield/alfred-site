@@ -27,7 +27,7 @@ export const musicType = defineType({
             type: 'url',
             description: '可以粘贴 Spotify 或 Apple Music 的分享链接'
         }),
-        defineField({ name: 'comment', title: '听感/乐评', type: 'text', options: { rows: 3 } }),
+        defineField({ name: 'comment', title: '听感/乐评', type: 'text', rows: 3 }),
     ],
     preview: {
         select: { title: 'title', subtitle: 'artist', media: 'coverImage' }
