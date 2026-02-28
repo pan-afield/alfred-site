@@ -29,8 +29,9 @@ export default function Header() {
                 {/* 主题切换开关 */}
                 <ThemeToggle />
                 {/* 社交链接 */}
-                <div className="w-12 h-12 rounded-2xl bg-card-bg border border-card-border flex items-center justify-center text-text-main hover:text-primary-gold cursor-pointer transition-colors shadow-sm">GH</div>
-                <div className="w-12 h-12 rounded-2xl bg-card-bg border border-card-border flex items-center justify-center text-text-main hover:text-primary-gold cursor-pointer transition-colors shadow-sm">X</div>
+                <div className="w-12 h-12 rounded-2xl bg-card-bg border border-card-border flex items-center justify-center text-text-main hover:text-primary-gold cursor-pointer transition-colors shadow-sm"
+                    onClick={() => window.open('https://github.com/pan-afield', '_blank')}>GH</div>
+                {/* <div className="w-12 h-12 rounded-2xl bg-card-bg border border-card-border flex items-center justify-center text-text-main hover:text-primary-gold cursor-pointer transition-colors shadow-sm">X</div> */}
             </div>
         </motion.header>
     );

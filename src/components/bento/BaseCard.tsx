@@ -3,8 +3,6 @@
 import React, { useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Variants, motion } from 'framer-motion';
-// import gsap from 'gsap'; // 配合 handleMouseMove/handleMouseLeave 使用
-// import { useSettingStore } from '@/store/settingStore'; // 配合 handleMouseMove 使用
 
 interface BaseCardProps {
   children: React.ReactNode;
@@ -32,25 +30,9 @@ export const itemVariants: Variants = {
 export const BaseCard = ({ children, className = "", path, ariaLabel }: BaseCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const lightRef = useRef<HTMLDivElement>(null);
-  // const theme = useSettingStore((state) => state.theme); // 配合 handleMouseMove 使用
   const router = useRouter();
   const isClickable = typeof path === "string" && path.length > 0;
-  // const [isMobile, setIsMobile] = useState(false); // 配合 handleMouseMove/handleMouseLeave 使用
   const isNavigatingRef = useRef<boolean>(false);
-
-  // 检测移动设备（配合 handleMouseMove/handleMouseLeave 使用）
-  // useEffect(() => {
-  //   const checkMobile = () => {
-  //     setIsMobile(
-  //       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-  //         navigator.userAgent
-  //       ) || window.innerWidth < 768
-  //     );
-  //   };
-  //   checkMobile();
-  //   window.addEventListener('resize', checkMobile);
-  //   return () => window.removeEventListener('resize', checkMobile);
-  // }, []);
 
   const handleNavigate = useCallback(() => {
     if (!isClickable || isNavigatingRef.current) return;
@@ -66,60 +48,6 @@ export const BaseCard = ({ children, className = "", path, ariaLabel }: BaseCard
     }
   };
 
-  // PC 端鼠标事件处理（仅在非移动端启用）
-  // 已注释：鼠标移入卡片会偏移（微浮 + 3D 倾斜）的效果
-  // const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-  //   if (isMobile) return; // 移动端禁用鼠标事件
-  //
-  //   const card = e.currentTarget;
-  //   const rect = card.getBoundingClientRect();
-  //   const x = e.clientX - rect.left;
-  //   const y = e.clientY - rect.top;
-  //
-  //   const centerX = rect.width / 2;
-  //   const centerY = rect.height / 2;
-  //
-  //   const rotateX = (y - centerY) / 20; // 调整除数来控制倾斜幅度
-  //   const rotateY = (centerX - x) / 20;
-  //
-  //   // 计算偏移，让阴影向鼠标相反的方向延伸
-  //   const moveX = (x - rect.width / 2) / 10;
-  //   const moveY = (y - rect.height / 2) / 10;
-  //
-  //   // 核心优化：判断主题选择颜色
-  //   const shadowColor = theme === 'dark'
-  //     ? 'rgba(251, 191, 36, 0.25)' // 暗色模式：琥珀金光晕
-  //     : 'rgba(0, 0, 0, 0.15)';     // 浅色模式：经典柔和阴影
-  //
-  //   gsap.to(card, {
-  //     // 暗色下增加模糊半径 (60px) 并稍微缩小扩散范围 (-10px)
-  //     boxShadow: theme === 'dark'
-  //       ? `${-moveX}px ${-moveY}px 60px -10px ${shadowColor}`
-  //       : `${-moveX}px ${-moveY}px 30px -5px ${shadowColor}`,
-  //     y: -4, // 悬停时微浮
-  //     duration: 0.4,
-  //   });
-  //
-  //   gsap.to(card, {
-  //     rotateX: rotateX,
-  //     rotateY: rotateY,
-  //     transformPerspective: 1000,
-  //     duration: 0.5,
-  //     ease: "power2.out"
-  //   });
-  // }, [isMobile, theme]);
-  //
-  // const handleMouseLeave = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-  //   if (isMobile) return; // 移动端禁用鼠标事件
-  //
-  //   gsap.to(e.currentTarget, {
-  //     rotateX: 0,
-  //     rotateY: 0,
-  //     duration: 0.5,
-  //     ease: "power2.out"
-  //   });
-  // }, [isMobile]);
-
   return (
     <motion.div
       ref={cardRef}
@@ -127,8 +55,6 @@ export const BaseCard = ({ children, className = "", path, ariaLabel }: BaseCard
       // 统一使用浏览器的点击判定逻辑（会自动区分滚动 vs 点击）
       onClick={isClickable ? handleNavigate : undefined}
       onKeyDown={handleKeyDown}
-      // onMouseMove={!isMobile ? handleMouseMove : undefined}
-      // onMouseLeave={!isMobile ? handleMouseLeave : undefined}
       role={isClickable ? "button" : undefined}
       tabIndex={isClickable ? 0 : undefined}
       aria-label={ariaLabel}
