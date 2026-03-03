@@ -1,19 +1,16 @@
 // src/app/(pages)/layout.tsx
 "use client";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { BackLink } from "@/components/shared/BackLink";
 
 export default function SubPagesLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname(); // 获取当前路径
     return (
         <div className="relative min-h-screen bg-background overflow-hidden">
-            {/* 共享导航 */}
+            {/* 共享导航：详情页返回列表页，列表页返回首页 */}
             <nav className="fixed top-0 left-0 w-full z-100 p-8 flex justify-between items-center mix-blend-difference">
-                <Link href="/" className="group flex items-center gap-2 text-main font-medium">
-                    <span className="transition-transform group-hover:-translate-x-1">←</span>
-                    <span>Index</span>
-                </Link>
+                <BackLink />
                 <div className="text-xs tracking-widest opacity-30">ALFRED / 2024</div>
             </nav>
 
@@ -25,7 +22,7 @@ export default function SubPagesLayout({ children }: { children: React.ReactNode
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    className="container mx-auto pt-32 px-6 pb-20"
+                    className="container mx-auto pt-8 px-6 pb-20"
                 >
                     {children}
                 </motion.main>
