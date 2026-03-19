@@ -7,7 +7,7 @@ export default async function CookingPage() {
   const recipes = await getCookingRecipes();
 
   return (
-    <div className="max-w-6xl mx-auto py-24 px-6">
+    <div className="max-w-6xl mx-auto px-6">
       <header className="mb-16">
         <h1 className="text-4xl font-bold text-text-main mb-4 uppercase tracking-widest">
           Alfred&apos;s Kitchen

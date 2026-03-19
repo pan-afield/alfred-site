@@ -15,7 +15,7 @@ export default async function GaragePage() {
   return (
     <div className="w-full bg-black text-white min-h-screen">
       {/* 头部宣言 */}
-      <header className="max-w-7xl mx-auto py-24 px-6">
+      <header className="max-w-7xl mx-auto px-6">
         <h1 className="text-6xl font-black italic tracking-tighter text-white mb-4 uppercase">
           Alfred&apos;s Garage
         </h1>
