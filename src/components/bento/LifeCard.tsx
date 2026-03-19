@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Image from 'next/image';
 import { BaseCard } from './BaseCard';
 import catImg from '@/images/life/cat.jpg';
@@ -44,7 +44,6 @@ export const LifeCard = ({ path, ariaLabel }: LifeCardProps) => {
 
       {/* 内容层 */}
       <div className="relative z-10 p-8 h-full flex flex-col justify-between">
-
         {/* --- 左上角内容：悬停时显示 --- */}
         <div className="opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out">
           <span className="badge-base bg-life-pink/20 text-life-pink border-life-pink/30 backdrop-blur-md">

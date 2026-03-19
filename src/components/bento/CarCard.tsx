@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useRef } from 'react';
 import { BaseCard } from './BaseCard';
 import gsap from 'gsap';
@@ -14,15 +14,16 @@ export const CarCard = ({ path, ariaLabel }: CarCardProps) => {
 
   const handleMouseEnter = () => {
     // 1. 赛车疾驰效果：先退后进，模拟弹射起步
-    gsap.fromTo(carIconRef.current,
+    gsap.fromTo(
+      carIconRef.current,
       { x: -100, opacity: 0, scale: 0.8 },
       {
         x: 0,
         opacity: 1,
         scale: 1,
         duration: 0.6,
-        ease: "back.out(1.2)"
-      }
+        ease: 'back.out(1.2)',
+      },
     );
 
     // 2. 数值滚动效果：模拟转速表/马力上升
@@ -30,33 +31,49 @@ export const CarCard = ({ path, ariaLabel }: CarCardProps) => {
     gsap.to(targetValue, {
       val: 518, // 911 GT3 RS 的马力
       duration: 1.5,
-      ease: "power3.out",
+      ease: 'power3.out',
       onUpdate: () => {
         if (statsRef.current) {
           statsRef.current.innerText = Math.floor(targetValue.val).toString();
         }
-      }
+      },
     });
   };
 
   return (
-    <div onMouseEnter={handleMouseEnter} className="md:col-span-2 md:row-span-1 h-full">
+    <div
+      onMouseEnter={handleMouseEnter}
+      className="md:col-span-2 md:row-span-1 h-full"
+    >
       <BaseCard
-        className="flex items-center justify-between overflow-hidden h-full"
+        className="flex items-center justify-between overflow-hidden h-full group"
         path={path}
         ariaLabel={ariaLabel}
       >
         {/* 左侧文字区 */}
         <div className="flex flex-col relative z-10">
+          <div className="opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out mb-3">
+            <span className="badge-base bg-red-500/20 text-red-400 border-red-500/30 backdrop-blur-md w-fit">
+              Motorsport
+            </span>
+          </div>
           <div className="flex items-center gap-2 mb-2">
             <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-xs text-text-dim uppercase tracking-[0.2em]">Track Mode</span>
+            <span className="text-xs text-text-dim uppercase tracking-[0.2em]">
+              Track Mode
+            </span>
           </div>
           <h2 className="text-3xl font-black italic text-text-main leading-none">
             911 GT3 RS
           </h2>
           <p className="mt-2 text-sm text-text-dim">
-            <span ref={statsRef} className="font-mono text-primary-gold font-bold text-lg">0</span> HP · 4.0L Boxer-6
+            <span
+              ref={statsRef}
+              className="font-mono text-primary-gold font-bold text-lg"
+            >
+              0
+            </span>{' '}
+            HP · 4.0L Boxer-6
           </p>
         </div>
 

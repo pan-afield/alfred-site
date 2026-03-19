@@ -39,12 +39,12 @@ export function BackLink({ className, children }: BackLinkProps) {
   return (
     <Link
       href={href}
-      className={className ?? "group flex items-center gap-2 text-main font-medium"}
+      className={className ?? "group flex items-center gap-2 text-main font-medium select-none cursor-pointer"}
     >
       {children ?? (
         <>
           <span className="transition-transform group-hover:-translate-x-1">←</span>
-          <span>Index</span>
+          <span>Back</span>
         </>
       )}
     </Link>

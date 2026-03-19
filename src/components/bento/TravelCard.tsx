@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Image from 'next/image';
 import { BaseCard } from './BaseCard';
 import travelImage from '@/images/life/travel.jpg';
@@ -27,10 +27,16 @@ export const TravelCard = ({ path, ariaLabel }: TravelCardProps) => (
     </div>
     <div className="absolute -inset-8 bg-linear-to-t from-app-bg via-app-bg/30 to-transparent" />
     <div className="relative z-10 h-full flex flex-col justify-between p-6">
-      <span className="badge-base bg-emerald-500/10 text-emerald-500 border-emerald-500/20 w-fit">Wanderlust</span>
+      <div className="opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out">
+        <span className="badge-base bg-emerald-500/20 text-emerald-500 border-emerald-500/30 backdrop-blur-md w-fit">
+          Wanderlust
+        </span>
+      </div>
       <div>
         <h2 className="text-xl font-bold text-text-main">下一站</h2>
-        <p className="text-xs mt-1 tracking-widest uppercase text-primary-gold">Iceland</p>
+        <p className="text-xs mt-1 tracking-widest uppercase text-primary-gold">
+          Iceland
+        </p>
       </div>
     </div>
   </BaseCard>

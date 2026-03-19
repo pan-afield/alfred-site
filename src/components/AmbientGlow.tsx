@@ -53,17 +53,21 @@ export const AmbientGlow = () => {
 
     return (
         <div
-            ref={glowRef}
-            // 关键点：使用 fixed 定位，并确保 pointer-events-none 防止干扰
-            // 注意：不使用 Tailwind 的 translate 类，因为 GSAP 会直接控制 transform
-            className="pointer-events-none fixed top-0 left-0 w-[600px] h-[600px] z-0"
-            style={{
-                background: `radial-gradient(circle, var(--color-primary-gold) 0%, transparent 70%)`,
-                opacity: theme === 'dark' ? 0.2 : 0.15, // 初始 opacity，会被 GSAP 更新
-                filter: 'blur(80px)',
-                mixBlendMode: 'soft-light',
-                willChange: 'transform',
-            }}
-        />
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 z-5 overflow-hidden"
+        >
+            <div
+                ref={glowRef}
+                // 用容器裁剪光晕，避免靠近边缘时触发页面滚动条
+                className="absolute top-0 left-0 h-[600px] w-[600px]"
+                style={{
+                    background: `radial-gradient(circle, var(--color-primary-gold) 0%, transparent 70%)`,
+                    opacity: theme === 'dark' ? 0.2 : 0.15, // 初始 opacity，会被 GSAP 更新
+                    filter: 'blur(80px)',
+                    mixBlendMode: 'soft-light',
+                    willChange: 'transform',
+                }}
+            />
+        </div>
     );
 };

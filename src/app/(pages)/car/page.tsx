@@ -13,7 +13,7 @@ export default async function GaragePage() {
   const cars = await getCars();
 
   return (
-    <div className="w-full bg-black text-white min-h-screen">
+    <div className="w-full text-text-main min-h-screen">
       {/* 头部宣言 */}
       <header className="max-w-7xl mx-auto px-6">
         <h1 className="text-6xl font-black italic tracking-tighter text-white mb-4 uppercase">
@@ -25,11 +25,11 @@ export default async function GaragePage() {
       </header>
 
       {/* 横向滚动容器 */}
-      <div className="flex overflow-x-auto snap-x snap-mandatory gap-10 pb-20 px-[5vw] md:px-[10vw]">
+      <div className="flex overflow-x-auto snap-x snap-mandatory gap-10 pb-20 px-[5vw] md:px-[10vw] mt-10">
         {cars.map((car: any) => (
           <div
             key={car._id}
-            className="min-w-[85vw] md:min-w-[700px] aspect-[16/10] snap-center relative group rounded-3xl overflow-hidden border border-white/5 bg-zinc-950 shadow-[0_0_60px_rgba(0,0,0,0.8)] transition-all duration-500 hover:border-amber-500/30"
+            className="min-w-[85vw] md:min-w-[700px] aspect-16/10 snap-center relative group rounded-3xl overflow-hidden border border-white/5 bg-zinc-950 shadow-[0_0_60px_rgba(0,0,0,0.8)] transition-all duration-500 hover:border-amber-500/30"
           >
             {/* 车辆大片 */}
             <Image
@@ -40,7 +40,7 @@ export default async function GaragePage() {
             />
 
             {/* 渐变遮罩层 (Heisenberg's Shade) */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent p-10 flex flex-col justify-end" />
+            <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent p-10 flex flex-col justify-end" />
 
             {/* 内容区 */}
             <div className="absolute inset-0 p-10 flex flex-col justify-end z-10">
