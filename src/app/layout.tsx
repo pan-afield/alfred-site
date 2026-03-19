@@ -1,17 +1,19 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { AmbientGlow } from "@/components/AmbientGlow";
-import { ThemeInitializer } from "@/components/ThemeInitializer";
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import './globals.css';
+import { AmbientGlow } from '@/components/AmbientGlow';
+import { ThemeInitializer } from '@/components/ThemeInitializer';
+import Loading from '@/components/loading/Loading';
+import { Suspense } from 'react';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' }, // 优先使用 SVG
-      { url: '/icon.png', type: 'image/png' },       // 备选使用 PNG
+      { url: '/icon.png', type: 'image/png' }, // 备选使用 PNG
     ],
     apple: [
       { url: '/apple-touch-icon.png' }, // 用于 iPhone 桌面图标
@@ -37,8 +39,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{
-          __html: `
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
     (function() {
       try {
         const stored = localStorage.getItem('user-theme-preference');
@@ -51,7 +54,9 @@ export default function RootLayout({
         document.documentElement.classList.add(theme);
       } catch (e) {}
     })()
-  ` }} />
+  `,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -61,9 +66,9 @@ export default function RootLayout({
         <AmbientGlow />
 
         {/* 内容层 */}
-        <div className="relative z-10">
-          {children}
-        </div>
+        <Suspense fallback={<Loading />}>
+          <div className="relative z-10">{children}</div>
+        </Suspense>
       </body>
     </html>
   );

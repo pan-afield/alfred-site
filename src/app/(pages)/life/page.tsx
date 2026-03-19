@@ -6,7 +6,7 @@ export default async function LifePage() {
   const moments = await getLifeMoments();
 
   return (
-    <div className="max-w-2xl mx-auto py-24 px-6">
+    <div className="max-w-2xl mx-auto px-6">
       <header className="mb-16 text-center">
         <h1 className="text-3xl font-bold text-text-main mb-2">Life Moments</h1>
         <p className="text-sm text-text-dim italic">碎碎念，以及生活的瞬间。</p>
@@ -27,17 +27,25 @@ export default async function LifePage() {
 
             {/* 图片网格布局 */}
             {item.images && item.images.length > 0 && (
-              <div className={`grid gap-2 ${
-                item.images.length === 1 ? 'grid-cols-1' : 
-                item.images.length === 2 ? 'grid-cols-2' : 'grid-cols-3'
-              }`}>
+              <div
+                className={`grid gap-2 ${
+                  item.images.length === 1
+                    ? 'grid-cols-1'
+                    : item.images.length === 2
+                      ? 'grid-cols-2'
+                      : 'grid-cols-3'
+                }`}
+              >
                 {item.images.map((img: string, index: number) => (
-                  <div key={index} className="relative aspect-square rounded-lg overflow-hidden border border-white/5 bg-zinc-900">
-                    <Image 
-                      src={img} 
-                      alt="moment" 
-                      fill 
-                      className="object-cover hover:scale-105 transition-transform duration-500" 
+                  <div
+                    key={index}
+                    className="relative aspect-square rounded-lg overflow-hidden border border-white/5 bg-zinc-900"
+                  >
+                    <Image
+                      src={img}
+                      alt="moment"
+                      fill
+                      className="object-cover hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 ))}
