@@ -1,4 +1,4 @@
-import type { StructureResolver } from 'sanity/structure'
+import type { StructureResolver } from 'sanity/structure';
 
 //定义了 UI 左侧菜单长什么样（用户界面）
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -9,21 +9,13 @@ export const structure: StructureResolver = (S) =>
       // 1. 电影模块 (Cinema)
       S.documentTypeListItem('movie')
         .title('Cinema Archives')
-        .child(
-          S.documentList()
-            .title('Movies')
-            .filter('_type == "movie"')
-        ),
+        .child(S.documentList().title('Movies').filter('_type == "movie"')),
 
       // 2. 技术日志模块 (Projects/DevLog)
       // 注意：这里必须和你 schemaTypes/project.ts 里的 name: 'project' 一致
       S.documentTypeListItem('project')
         .title('Technical Logs')
-        .child(
-          S.documentList()
-            .title('All Logs')
-            .filter('_type == "project"')
-        ),
+        .child(S.documentList().title('All Logs').filter('_type == "project"')),
 
       // 3. 足迹 (新增) 🌍
       S.documentTypeListItem('footprint')
@@ -33,11 +25,17 @@ export const structure: StructureResolver = (S) =>
             .title('Destinations')
             .filter('_type == "footprint"')
             // 可以按时间倒序排列，最近去的在最上面
-            .defaultOrdering([{ field: 'visitedAt', direction: 'desc' }])
+            .defaultOrdering([{ field: 'visitedAt', direction: 'desc' }]),
         ),
 
       // 4. 生活 (新增) 📸
       S.documentTypeListItem('life').title('Daily Moments (Life)'),
+
+      // 5. 食谱/厨艺 (Cooking)
+      S.documentTypeListItem('cooking').title('Cooking Recipes (Cooking)'),
+
+      // 6. 座驾 (Garage)
+      S.documentTypeListItem('car').title('Garage (Car)'),
 
       S.divider(),
 
@@ -45,6 +43,8 @@ export const structure: StructureResolver = (S) =>
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&
-          !['movie', 'project', 'footprint', 'life'].includes(item.getId()!)
+          !['movie', 'project', 'footprint', 'life', 'cooking', 'car'].includes(
+            item.getId()!,
+          ),
       ),
-    ])
+    ]);
