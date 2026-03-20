@@ -17,9 +17,9 @@ export default async function CookingDetailPage({
     <main className="min-h-screen text-text-main px-6">
       <div className="max-w-4xl mx-auto">
         {/* 返回与分类 */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-wrap justify-between items-center mb-12">
           {/* 标题区域 */}
-          <h1 className="text-5xl md:text-7xl font-black italic tracking-tighter uppercase mb-12">
+          <h1 className="text-4xl md:text-7xl font-black italic tracking-tighter uppercase ">
             {recipe.title}
           </h1>
           <span className="bg-amber-500/10 text-amber-500 border border-amber-500/20 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">
