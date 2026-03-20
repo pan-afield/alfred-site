@@ -49,7 +49,11 @@ export async function getMovies() {
 
   try {
     // 使用重试机制获取数据
-    return await fetchWithRetry(() => client.fetch(query), 3, 1000);
+    return await fetchWithRetry(
+      () => client.fetch(query, undefined, { cache: 'no-store' }),
+      3,
+      1000,
+    );
   } catch (error) {
     console.error('获取电影数据失败（已重试）:', error);
     // 返回空数组而不是抛出错误，避免页面崩溃
@@ -69,7 +73,11 @@ export async function getProjects() {
     category
   }`;
   try {
-    return await fetchWithRetry(() => client.fetch(query), 3, 1000);
+    return await fetchWithRetry(
+      () => client.fetch(query, undefined, { cache: 'no-store' }),
+      3,
+      1000,
+    );
   } catch (error) {
     console.error('获取项目数据失败（已重试）:', error);
     return [];
@@ -90,7 +98,11 @@ export async function getProjectBySlug(slug: string) {
 
   // 使用第二个参数传递变量，防止注入攻击
   try {
-    return await fetchWithRetry(() => client.fetch(query, { slug }), 3, 1000);
+    return await fetchWithRetry(
+      () => client.fetch(query, { slug }, { cache: 'no-store' }),
+      3,
+      1000,
+    );
   } catch (error) {
     console.error('获取技术日志数据失败（已重试）:', error);
     return null;
@@ -106,7 +118,11 @@ export async function getFootprints() {
     "coverImage": coverImage.asset->url
   }`;
   try {
-    return await fetchWithRetry(() => client.fetch(query), 3, 1000);
+    return await fetchWithRetry(
+      () => client.fetch(query, undefined, { cache: 'no-store' }),
+      3,
+      1000,
+    );
   } catch (error) {
     console.error('获取足迹数据失败（已重试）:', error);
     return [];
@@ -123,7 +139,11 @@ export async function getLifeMoments() {
     "images": images[].asset->url
   }`;
   try {
-    return await fetchWithRetry(() => client.fetch(query), 3, 1000);
+    return await fetchWithRetry(
+      () => client.fetch(query, undefined, { cache: 'no-store' }),
+      3,
+      1000,
+    );
   } catch (error) {
     console.error('获取生活瞬间数据失败（已重试）:', error);
     return [];
@@ -137,7 +157,11 @@ export async function getGames() {
     "coverImage": coverImage.asset->url
   }`;
   try {
-    return await fetchWithRetry(() => client.fetch(query), 3, 1000);
+    return await fetchWithRetry(
+      () => client.fetch(query, undefined, { cache: 'no-store' }),
+      3,
+      1000,
+    );
   } catch (error) {
     console.error('获取游戏数据失败（已重试）:', error);
     return [];
@@ -151,7 +175,11 @@ export async function getMusic() {
     "coverImage": coverImage.asset->url
   }`;
   try {
-    return await fetchWithRetry(() => client.fetch(query), 3, 1000);
+    return await fetchWithRetry(
+      () => client.fetch(query, undefined, { cache: 'no-store' }),
+      3,
+      1000,
+    );
   } catch (error) {
     console.error('获取音乐数据失败（已重试）:', error);
     return [];
@@ -165,7 +193,11 @@ export async function getCookingRecipes() {
     "coverImage": coverImage.asset->url
   }`;
   try {
-    return await fetchWithRetry(() => client.fetch(query), 3, 1000);
+    return await fetchWithRetry(
+      () => client.fetch(query, undefined, { cache: 'no-store' }),
+      3,
+      1000,
+    );
   } catch (error) {
     console.error('获取食谱数据失败（已重试）:', error);
     return [];
@@ -179,7 +211,11 @@ export async function getCars() {
     "coverImage": coverImage.asset->url
   }`;
   try {
-    return await fetchWithRetry(() => client.fetch(query), 3, 1000);
+    return await fetchWithRetry(
+      () => client.fetch(query, undefined, { cache: 'no-store' }),
+      3,
+      1000,
+    );
   } catch (error) {
     console.error('获取座驾数据失败（已重试）:', error);
     return [];
@@ -205,5 +241,9 @@ export async function getCookingById(id: string) {
 
   // 使用 client.fetch 并传入变量 $id
   // 这里的 client 是你之前配置好的 createClient 实例
-  return await fetchWithRetry(() => client.fetch(query, { id }), 3, 1000);
+  return await fetchWithRetry(
+    () => client.fetch(query, { id }, { cache: 'no-store' }),
+    3,
+    1000,
+  );
 }
